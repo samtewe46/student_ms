@@ -15,4 +15,8 @@ public class StudentController {
     public String sayBye(){
         return "Bye! Stay safe";
     }
+    @GetMapping("/ask")
+    public String question(){
+        return "What is your name?";
+    }
 }
