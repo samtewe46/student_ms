@@ -1,4 +1,4 @@
-package com.student_ms.student.ms.service;
+package com.student_ms.student.ms.service.student;
 
 import com.student_ms.student.ms.entity.Student;
 
@@ -19,4 +19,6 @@ public interface StudentService {
     Student updateStudentById(Long id, Student student);
 
     void deleteStudentById(Long id);
+
+    Student addDepartmentToStudent(Long studentId, Long departmentId);
 }
