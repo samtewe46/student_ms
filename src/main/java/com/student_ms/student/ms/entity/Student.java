@@ -1,8 +1,6 @@
 package com.student_ms.student.ms.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
@@ -13,4 +11,8 @@ public class Student {
     private Long id;
     private String name;
     private String gender;
+    @OneToOne (cascade = CascadeType.ALL, orphanRemoval = true)
+    private Address address;
+    @ManyToOne
+    private Department department;
 }

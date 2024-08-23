@@ -1,16 +1,20 @@
-package com.student_ms.student.ms.service;
+package com.student_ms.student.ms.service.student;
 
+import com.student_ms.student.ms.entity.Department;
 import com.student_ms.student.ms.entity.Student;
+import com.student_ms.student.ms.repository.DepartmentRepo;
 import com.student_ms.student.ms.repository.StudentRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.Optional;
-
+@RequiredArgsConstructor
 @org.springframework.stereotype.Service
 public class StudentServiceImpl implements StudentService {
-    @Autowired
-    private StudentRepository studentRepository;
+
+    private final StudentRepository studentRepository;
+    private final DepartmentRepo departmentRepo;
     @Override
     public Student save (Student student) {
 
@@ -22,9 +26,9 @@ public class StudentServiceImpl implements StudentService {
         return studentRepository.getStudentByName(name);
     }
 
-    @Override
+   @Override
     public List<Student> getAllStudents() {
-        return studentRepository.findAll();
+         return studentRepository.findAll();
     }
 
     @Override
@@ -54,6 +58,24 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public void deleteStudentById(Long id) {
         studentRepository.deleteById(id);
+    }
+
+    @Override
+    public Student addDepartmentToStudent(Long studentId, Long departmentId) {
+
+            Optional<Student> studentOpt = studentRepository.findById(studentId);
+            Optional<Department> departmentOpt = departmentRepo.findById(departmentId);
+
+            if (studentOpt.isPresent() && departmentOpt.isPresent()) {
+                Student student = studentOpt.get();
+                Department department = departmentOpt.get();
+
+                student.setDepartment(department);
+                return studentRepository.save(student);
+            } else {
+                throw new RuntimeException("Student or Department not found");
+            }
+
     }
 
 
